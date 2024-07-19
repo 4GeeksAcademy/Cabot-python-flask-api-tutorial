@@ -15,9 +15,15 @@ def hello_world():
 @app.route('/todos', methods=['POST'])
 def add_new_todo():
     request_body = request.json
+    todos.append(request_body)
     print("Incoming request with the following body", request_body)
-    return 'Response for the POST todo'
+    return jsonify(todos)
 
+@app.route('/todos/<int:position>', methods=['DELETE'])
+def delete_todo(position):
+    todos.remove(todos[position])
+    print("This is the position to delete:", position)
+    return jsonify(todos)
 
 # These two lines should always be at the end of your app.py file
 if __name__ == '__main__':
